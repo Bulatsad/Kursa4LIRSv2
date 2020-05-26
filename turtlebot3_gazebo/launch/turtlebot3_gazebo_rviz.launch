@@ -1,0 +1,21 @@
+<launch>
+  <arg name="multi_robot_name" default=""/>
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find omniturtle_description)/urdf/omniturtle.urdf.xacro" />
+
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="50.0" />
+    <param name="tf_prefix" value="$(arg multi_robot_name)"/>
+  </node>
+
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="use_gui" value="true"/>
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find omniturtle_description)/rviz/model.rviz"/>
+</launch>
+
+
+
+
